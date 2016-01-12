@@ -29,16 +29,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        dateWheel.setLableTextColor(getResources().getColor(R.color.colorAccent));
+        dateWheel.setLabelTextColor(getResources().getColor(R.color.colorAccent));
         dateWheel.setLineColor(getResources().getColor(R.color.colorAccent));
         dateWheel.setVisibleItem(5);
-        dateWheel.setLable("cm");
+        dateWheel.setLabel("cm");
         mAdapter = new WheelAdapter<>(this);
         List<String> dataList = new ArrayList<>();
         for (int i = 60; i < 240; i++) {
             dataList.add(String.format("%d", i));
         }
         mAdapter.setData(dataList);
+
+        //also support
+//        mAdapter.setTextColor();
+//        mAdapter.setTextSize();
+//        mAdapter.setTextPadding();
         dateWheel.setAdapter(mAdapter);
         dateWheel.setSelectedItem(50);
 

@@ -3,6 +3,34 @@
 
 ![](art/demo.png)
 
+
+# show you the code 
+
+        dateWheel = (RecycleWheelView) findViewById(R.id.dateWheelView);
+         
+        dateWheel.setLabelTextColor(getResources().getColor(R.color.colorAccent));
+        dateWheel.setLineColor(getResources().getColor(R.color.colorAccent));
+        dateWheel.setVisibleItem(5);
+        dateWheel.setLabel("cm");
+        
+        mAdapter = new WheelAdapter<>(this);
+        List<String> dataList = new ArrayList<>();
+        for (int i = 60; i < 240; i++) {
+            dataList.add(String.format("%d", i));
+        }
+        mAdapter.setData(dataList);
+        
+        dateWheel.setAdapter(mAdapter);
+        dateWheel.setSelectedItem(50);
+        dateWheel.setOnSelectListener(new RecycleWheelView.OnSelectItemListener() {
+                @Override
+                public void onSelectChanged(int position) {
+                    mAdapter.setSelectedIndex(position);
+                    Toast.makeText(MainActivity.this, "index=" + position, Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            
  
 # 目前支持的特性有
 

@@ -49,7 +49,7 @@ public class RecycleWheelView extends RecyclerView {
     private boolean isCurve = false;
     private boolean gradient = true;
     private int visibleItemSize = 5;
-    private String lable = "label";
+    private String label = "label";
     private Paint labelTextPaint;
     private static final int MINI_VISIBLE_ITEM = 3;
     private static final int MAX_VISIBLE_ITEM = 11;
@@ -189,7 +189,7 @@ public class RecycleWheelView extends RecyclerView {
             int startLeft = getWidth() * 5 / 8;
             int paddingV = (getHeight() - height) >> 1;
             int centerY = (int) (paddingV + height / 2 + labelTextPaint.getTextSize() / 2);
-            canvas.drawText(lable, startLeft, centerY, labelTextPaint);
+            canvas.drawText(label, startLeft, centerY, labelTextPaint);
         }
     }
 
@@ -439,10 +439,10 @@ public class RecycleWheelView extends RecyclerView {
     /**
      * 设置显示在中间的数据边的文字，EG: 身高，年等
      *
-     * @param lable 显示标枪内容
+     * @param label 显示标枪内容
      */
-    public void setLable(String lable) {
-        this.lable = lable;
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     /**
@@ -459,7 +459,7 @@ public class RecycleWheelView extends RecyclerView {
      *
      * @param color 形式：0xFF000000,不要扔一个ID->R.color.black
      */
-    public void setLableTextColor(@ColorInt int color) {
+    public void setLabelTextColor(@ColorInt int color) {
         labelTextPaint.setColor(color);
     }
 
