@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
         dateWheel.setOnSelectListener(new RecycleWheelView.OnSelectItemListener() {
             @Override
             public void onSelectChanged(int position) {
+                mAdapter.setSelectedIndex(position);
                 Toast.makeText(MainActivity.this, String.format("index : %d", position), Toast.LENGTH_SHORT).show();
             }
         });

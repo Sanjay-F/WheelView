@@ -7,16 +7,13 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.ColorInt;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-/**
- * 可回收的滑轮view
- */
 public class RecycleWheelView extends RecyclerView {
     //子view可以被缩放到最小的view的大小
     private static final float MIN_SCALE_VALUE = 0.1f;
@@ -153,7 +150,6 @@ public class RecycleWheelView extends RecyclerView {
     @Override
     protected void onMeasure(int widthSpec, int heightSpec) {
         super.onMeasure(widthSpec, heightSpec);
-        Log.e(TAG, "on measure");
         if (getChildCount() > 0) {
             View view = getChildAt(0);
             int paddingH = (getWidth() - view.getWidth()) >> 1;
@@ -199,7 +195,7 @@ public class RecycleWheelView extends RecyclerView {
 
 //            int paddingV = (getPaddingTop()+getPaddingBottom())/2;
 
-            Log.e(TAG, " padTop=" + getPaddingTop() + " childHeight=" + height + " height=" + getHeight() + " padV" + paddingV);
+//            Log.e(TAG, " padTop=" + getPaddingTop() + " childHeight=" + height + " height=" + getHeight() + " padV" + paddingV);
 
             int centerY = (int) (paddingV + height / 2 + labelTextPaint.getTextSize() / 2);
 //            Log.e(TAG, " view Width " + width + " parentWidth=" + getWidth() + "padV=" + paddingV);
@@ -251,6 +247,9 @@ public class RecycleWheelView extends RecyclerView {
         if (curPosition != mLastSelectPosition) {
             mLastSelectPosition = curPosition;
             if (mSelectListener != null) {
+                if( getAdapter()!=null){
+
+                }
                 mSelectListener.onSelectChanged(mLastSelectPosition);
             }
         }
@@ -363,7 +362,7 @@ public class RecycleWheelView extends RecyclerView {
      *
      * @param color 颜色
      */
-    public void setLineColor(int color) {
+    public void setLineColor(@ColorInt int color) {
         if (mLineDrawable != null) {
             mLineDrawable.setColor(color);
         } else {
@@ -401,6 +400,9 @@ public class RecycleWheelView extends RecyclerView {
      */
     public void setSelectedItem(int index) {
 
+        if (mSelectListener != null) {
+            mSelectListener.onSelectChanged(index);
+        }
         if (index <= 0) {
             index = 0;
         }
@@ -476,7 +478,7 @@ public class RecycleWheelView extends RecyclerView {
      *
      * @param color 形式：0xFF000000,不要扔一个ID->R.color.black
      */
-    public void setLableTextColor(int color) {
+    public void setLableTextColor(@ColorInt int color) {
         labelTextPaint.setColor(color);
     }
 

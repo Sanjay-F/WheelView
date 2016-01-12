@@ -23,6 +23,7 @@ public class TextWheelAdapter<T> extends RecyclerView.Adapter<TextWheelAdapter.t
     float mTextSize;
     //上下文
     Context mContext;
+    private int selectedIndex;
 
     public TextWheelAdapter(Context context) {
         mContext = context;
@@ -66,18 +67,7 @@ public class TextWheelAdapter<T> extends RecyclerView.Adapter<TextWheelAdapter.t
 
     @Override
     public void onBindViewHolder(TextWheelAdapter.tvViewHolder holder, int position) {
-
-        if (mTextSize != 0 && holder.contentTv.getTextSize() != mTextSize) {
-            holder.contentTv.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextSize);
-        }
-        if (mTextColor != 0 && holder.contentTv.getCurrentTextColor() != mTextColor) {
-            holder.contentTv.setTextColor(mTextColor);
-        }
-        if (holder.contentTv.getPaddingTop() != mTextPadding) {
-            holder.contentTv.setPadding(0, mTextPadding, 0, mTextPadding);
-        }
-        holder.contentTv.setText(mTextList.get(position).toString());
-
+        holder.bindData(mTextList.get(position).toString());
     }
 
     @Override
@@ -92,10 +82,37 @@ public class TextWheelAdapter<T> extends RecyclerView.Adapter<TextWheelAdapter.t
             super(view);
             contentTv = (TextView) view.findViewById(R.id.content_textview);
         }
+
+        public void bindData(String data) {
+
+
+            if (mTextSize != 0 && this.contentTv.getTextSize() != mTextSize) {
+                this.contentTv.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextSize);
+            }
+            if (mTextColor != 0 && this.contentTv.getCurrentTextColor() != mTextColor) {
+                this.contentTv.setTextColor(mTextColor);
+            }
+            if (this.contentTv.getPaddingTop() != mTextPadding) {
+                this.contentTv.setPadding(0, mTextPadding, 0, mTextPadding);
+            }
+            if (getAdapterPosition() == selectedIndex) {
+                contentTv.setTextColor(mContext.getResources().getColor(R.color.colorAccent));
+            }else{
+                contentTv.setTextColor(mContext.getResources().getColor(R.color.black));
+            }
+
+            this.contentTv.setText(data);
+
+        }
     }
 
     public static int dp2px(Context context, float dp) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dp * scale + 0.5f);
+    }
+
+    public void setSelectedIndex(int index) {
+        this.selectedIndex = index;
+        notifyDataSetChanged();
     }
 }
