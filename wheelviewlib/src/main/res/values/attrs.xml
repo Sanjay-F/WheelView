@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RecycleWheelView">
+        <attr name="recycleWheelDirection" format="enum">
+            <enum name="vertical" value="0"/>
+            <enum name="horizontal" value="1"/>
+        </attr>
+        <attr name="recycleWheelLineColor" format="color"/>
+        <attr name="recycleWheelLineThickness" format="dimension"/>
+        <attr name="recycleWheelLineDrawable" format="reference"/>
+        <attr name="recycleWheelLinePadding" format="dimension"/>
+    </declare-styleable>
+</resources>
