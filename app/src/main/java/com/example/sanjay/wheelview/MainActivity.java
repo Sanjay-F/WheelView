@@ -24,9 +24,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSelectChanged(int position) {
                 mAdapter.setSelectedIndex(position);
-//                Toast.makeText(MainActivity.this, String.format("index : %d", position), Toast.LENGTH_SHORT).show();
             }
         });
+
         dateWheel.setLableTextColor(getResources().getColor(R.color.colorAccent));
         dateWheel.setLineColor(getResources().getColor(R.color.colorAccent));
         dateWheel.setVisibleItem(5);

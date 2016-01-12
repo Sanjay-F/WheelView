@@ -61,7 +61,6 @@ public class TextWheelAdapter<T> extends RecyclerView.Adapter<TextWheelAdapter.t
     @Override
     public tvViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.listitem_date, null);
-
         return new tvViewHolder(view);
     }
 
@@ -78,9 +77,12 @@ public class TextWheelAdapter<T> extends RecyclerView.Adapter<TextWheelAdapter.t
     class tvViewHolder extends RecyclerView.ViewHolder {
         TextView contentTv;
 
+        private int originalTextColor;
+
         public tvViewHolder(View view) {
             super(view);
             contentTv = (TextView) view.findViewById(R.id.content_textview);
+            originalTextColor = contentTv.getCurrentTextColor();
         }
 
         public void bindData(String data) {
@@ -97,8 +99,8 @@ public class TextWheelAdapter<T> extends RecyclerView.Adapter<TextWheelAdapter.t
             }
             if (getAdapterPosition() == selectedIndex) {
                 contentTv.setTextColor(mContext.getResources().getColor(R.color.colorAccent));
-            }else{
-                contentTv.setTextColor(mContext.getResources().getColor(R.color.black));
+            } else {
+                contentTv.setTextColor(originalTextColor);
             }
 
             this.contentTv.setText(data);
