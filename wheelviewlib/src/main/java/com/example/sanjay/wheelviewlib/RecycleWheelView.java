@@ -195,7 +195,7 @@ public class RecycleWheelView extends RecyclerView {
                 height = getChildAt(0).getWidth();
             }
             int startLeft = getWidth() * 5 / 8;
-            int paddingV = (getHeight() - height) >> 1;
+            int paddingV = getPaddingTop();
             int centerY = (int) (paddingV + height / 2 + labelTextPaint.getTextSize() / 2);
 //            Log.e(TAG, " view Width " + width + " parentWidth=" + getWidth() + "padV=" + paddingV);
             canvas.drawText(lable, startLeft, centerY, labelTextPaint);
