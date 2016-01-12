@@ -1,5 +1,6 @@
 package com.example.sanjay.wheelviewlib;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -97,4 +98,10 @@ public class ViewUtils {
         }
         return false;
     }
+
+    public static int dp2px(Context context, float dp) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dp * scale + 0.5f);
+    }
+
 }

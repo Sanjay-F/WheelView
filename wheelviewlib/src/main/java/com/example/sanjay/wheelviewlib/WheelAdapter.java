@@ -1,6 +1,7 @@
 package com.example.sanjay.wheelviewlib;
 
 import android.content.Context;
+import android.support.annotation.ColorInt;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -11,27 +12,28 @@ import android.widget.TextView;
 import java.util.List;
 
 /**
- * 数据需要完成toString方法
+ * 数据bean需要完成toString方法
  */
-public class TextWheelAdapter<T> extends RecyclerView.Adapter<TextWheelAdapter.tvViewHolder> {
-    List<T> mTextList;
+public class WheelAdapter<T> extends RecyclerView.Adapter<WheelAdapter.tvViewHolder> {
+    private List<T> mTextList;
     //字体颜色
-    int mTextColor;
+    private int mTextColor;
     //字体padding
-    int mTextPadding;
+    private int mTextPadding;
+    private static final int DEFAULT_TEXT_PADDING = 5;
     //字体大小
     float mTextSize;
+    private static final int DEFAULT_TEXT_SIZE = 20;
     //上下文
-    Context mContext;
+    private Context mContext;
     private int selectedIndex;
 
-    public TextWheelAdapter(Context context) {
+    public WheelAdapter(Context context) {
         mContext = context;
-
+        mTextColor = mContext.getResources().getColor(R.color.colorAccent);
         mTextSize = TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_SP, 20, mContext.getResources().getDisplayMetrics());
-
-        mTextPadding = dp2px(mContext, 5);
+                TypedValue.COMPLEX_UNIT_SP, DEFAULT_TEXT_SIZE, mContext.getResources().getDisplayMetrics());
+        mTextPadding = ViewUtils.dp2px(mContext, DEFAULT_TEXT_PADDING);
 
     }
 
@@ -44,7 +46,7 @@ public class TextWheelAdapter<T> extends RecyclerView.Adapter<TextWheelAdapter.t
         mTextPadding = padding;
     }
 
-    public void setTextColor(int color) {
+    public void setTextColor(@ColorInt int color) {
         mTextColor = color;
     }
 
@@ -54,7 +56,11 @@ public class TextWheelAdapter<T> extends RecyclerView.Adapter<TextWheelAdapter.t
     }
 
     public void addData(List<T> dataList) {
-        mTextList.addAll(dataList);
+        if (mTextList != null) {
+            mTextList.addAll(dataList);
+        } else {
+            mTextList = dataList;
+        }
         notifyDataSetChanged();
     }
 
@@ -65,7 +71,7 @@ public class TextWheelAdapter<T> extends RecyclerView.Adapter<TextWheelAdapter.t
     }
 
     @Override
-    public void onBindViewHolder(TextWheelAdapter.tvViewHolder holder, int position) {
+    public void onBindViewHolder(WheelAdapter.tvViewHolder holder, int position) {
         holder.bindData(mTextList.get(position).toString());
     }
 
@@ -76,7 +82,6 @@ public class TextWheelAdapter<T> extends RecyclerView.Adapter<TextWheelAdapter.t
 
     class tvViewHolder extends RecyclerView.ViewHolder {
         TextView contentTv;
-
         private int originalTextColor;
 
         public tvViewHolder(View view) {
@@ -98,7 +103,7 @@ public class TextWheelAdapter<T> extends RecyclerView.Adapter<TextWheelAdapter.t
                 this.contentTv.setPadding(0, mTextPadding, 0, mTextPadding);
             }
             if (getAdapterPosition() == selectedIndex) {
-                contentTv.setTextColor(mContext.getResources().getColor(R.color.colorAccent));
+                contentTv.setTextColor(mTextColor);
             } else {
                 contentTv.setTextColor(originalTextColor);
             }
@@ -106,11 +111,6 @@ public class TextWheelAdapter<T> extends RecyclerView.Adapter<TextWheelAdapter.t
             this.contentTv.setText(data);
 
         }
-    }
-
-    public static int dp2px(Context context, float dp) {
-        final float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (dp * scale + 0.5f);
     }
 
     public void setSelectedIndex(int index) {

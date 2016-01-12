@@ -11,6 +11,7 @@ import android.support.annotation.ColorInt;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -18,7 +19,7 @@ public class RecycleWheelView extends RecyclerView {
     //子view可以被缩放到最小的view的大小
     private static final float MIN_SCALE_VALUE = 0.1f;
     private static final float MIN_ALPHA_VALUE = 0.1f;
-    private static final float ALPHA_WEIGHT = 2f;
+    private static final float ALPHA_WEIGHT = 1.6f;
     private static final String TAG = RecycleWheelView.class.getSimpleName();
 
     //设置一开始的padding
@@ -68,16 +69,11 @@ public class RecycleWheelView extends RecyclerView {
     }
 
 
-    public static int dp2px(Context context, float dp) {
-        final float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (dp * scale + 0.5f);
-    }
-
     void initAttr(AttributeSet attrs, int defStyle) {
 
         labelTextPaint = new Paint();
         labelTextPaint.setColor(Color.BLACK);
-        labelTextPaint.setTextSize(dp2px(getContext(), 17));
+        labelTextPaint.setTextSize(ViewUtils.dp2px(getContext(), 17));
 
         mOldPaddingLeft = getPaddingLeft();
         mOldPaddingBottom = getPaddingBottom();
@@ -136,6 +132,7 @@ public class RecycleWheelView extends RecyclerView {
         super.onScrollStateChanged(state);
         switch (state) {
             case SCROLL_STATE_IDLE: {
+                Log.e(TAG, " on state idle");
                 if (getLayoutManager() != null
                         && getLayoutManager().canScrollHorizontally()) {
                     adjustPositionX();
@@ -175,7 +172,7 @@ public class RecycleWheelView extends RecyclerView {
         drawCenterLine(canvas);
         //绘制旁边的标签 eg:年，体重
         drawLabel(canvas);
-        //画具体的内容
+        //设置childView的效果
         updateChildView();
     }
 
@@ -190,15 +187,8 @@ public class RecycleWheelView extends RecyclerView {
                 height = getChildAt(0).getWidth();
             }
             int startLeft = getWidth() * 5 / 8;
-
             int paddingV = (getHeight() - height) >> 1;
-
-//            int paddingV = (getPaddingTop()+getPaddingBottom())/2;
-
-//            Log.e(TAG, " padTop=" + getPaddingTop() + " childHeight=" + height + " height=" + getHeight() + " padV" + paddingV);
-
             int centerY = (int) (paddingV + height / 2 + labelTextPaint.getTextSize() / 2);
-//            Log.e(TAG, " view Width " + width + " parentWidth=" + getWidth() + "padV=" + paddingV);
             canvas.drawText(lable, startLeft, centerY, labelTextPaint);
         }
     }
@@ -234,6 +224,71 @@ public class RecycleWheelView extends RecyclerView {
         }
     }
 
+    /**
+     * 更新子view,包括渐显，缩小等
+     */
+    protected void updateChildView() {
+
+        if (getLayoutManager().canScrollHorizontally()) {
+            mCurView = ViewUtils.getCenterXChild(this);
+        } else {
+            mCurView = ViewUtils.getCenterYChild(this);
+        }
+
+        int centerIndex = indexOfChild(mCurView);
+        int limitViewIndex = visibleItemSize / 2;
+
+        for (int i = getChildCount() - 1; i >= 0; --i) {
+            View view = getChildAt(i);
+
+            //设置在可见区间的view
+            if (centerIndex - limitViewIndex <= i && centerIndex + limitViewIndex >= i) {
+
+                view.setVisibility(VISIBLE);
+                float value;
+                if (getLayoutManager().canScrollHorizontally()) {//水平情况
+                    float midX = view.getLeft() + view.getWidth() / 2.0f;
+                    float size = getWidth() / 2.0f;
+                    value = (size - midX) / size;
+                    if (ViewUtils.isChildInCenterX(this, view)) {
+                        mCurView = view;
+                    }
+                } else {//垂直情况
+                    float midY = view.getTop() + view.getHeight() / 2.0f;
+                    float size = getHeight() / 2.0f;
+                    value = (size - midY) / size;
+                    if (ViewUtils.isChildInCenterY(this, view)) {
+                        mCurView = view;
+                    }
+                }
+
+                float valueWeight = ((Math.abs(centerIndex - i)) * (1.0f / visibleItemSize)) * ALPHA_WEIGHT;
+                float viewAlpha = Math.abs(1 - valueWeight);
+
+
+                value = (float) Math.sqrt(1.0f - value * value);
+                value = Math.min(1.0f, Math.abs(value));
+                if (view != mCurView) {
+                    value -= MIN_SCALE_VALUE;
+                    if (value < 0.0f) {
+                        value = 0.0f;
+                    }
+                }
+
+                if (isCurve()) {
+                    view.setScaleX(value);
+                    view.setScaleY(value);
+                }
+                if (isGradient()) {
+                    view.setAlpha(viewAlpha);
+                }
+
+            } else {
+                view.setVisibility(GONE);
+            }
+        }
+    }
+
     /***
      * adjust position before Touch event complete and fling action start.
      */
@@ -247,9 +302,6 @@ public class RecycleWheelView extends RecyclerView {
         if (curPosition != mLastSelectPosition) {
             mLastSelectPosition = curPosition;
             if (mSelectListener != null) {
-                if( getAdapter()!=null){
-
-                }
                 mSelectListener.onSelectChanged(mLastSelectPosition);
             }
         }
@@ -275,84 +327,12 @@ public class RecycleWheelView extends RecyclerView {
         smoothScrollToPosition(curPosition);
     }
 
-    /**
-     * 更新子view,包括渐显，缩小等
-     */
-    protected void updateChildView() {
-
-        if (getLayoutManager().canScrollHorizontally()) {
-            mCurView = ViewUtils.getCenterXChild(this);
-        } else {
-            mCurView = ViewUtils.getCenterYChild(this);
-        }
-
-        int centerIndex = indexOfChild(mCurView);
-        int limitViewIndex = visibleItemSize / 2;
-
-        for (int i = getChildCount() - 1; i >= 0; --i) {
-            View view = getChildAt(i);
-            //在view的重用过程，需要对旧的view做复原工作
-            view.setAlpha(1.0f);
-            view.setScaleX(1.0f);
-            view.setScaleY(1.0f);
-
-
-            //设置在可见区间的view
-            if (centerIndex - limitViewIndex <= i && centerIndex + limitViewIndex >= i) {
-                view.setVisibility(VISIBLE);
-
-                float value;
-                if (getLayoutManager().canScrollHorizontally()) {//水平情况
-                    float midX = view.getLeft() + view.getWidth() / 2.0f;
-                    float size = getWidth() / 2.0f;
-                    value = (size - midX) / size;
-                    if (ViewUtils.isChildInCenterX(this, view)) {
-                        mCurView = view;
-                    }
-                } else {//垂直情况
-                    float midY = view.getTop() + view.getHeight() / 2.0f;
-                    float size = getHeight() / 2.0f;
-                    value = (size - midY) / size;
-                    if (ViewUtils.isChildInCenterY(this, view)) {
-                        mCurView = view;
-                    }
-                }
-
-
-                float valueWeight = ((Math.abs(centerIndex - i)) * (1.0f / visibleItemSize)) * ALPHA_WEIGHT;
-                float viewAlpha = Math.abs(1 - valueWeight);
-
-
-                value = (float) Math.sqrt(1.0f - value * value);
-                value = Math.min(1.0f, Math.abs(value));
-                if (view != mCurView) {
-
-                    value -= MIN_SCALE_VALUE;
-                    if (value < 0.0f) {
-                        value = 0.0f;
-                    }
-                }
-
-                if (isCurve()) {
-                    view.setScaleX(value);
-                    view.setScaleY(value);
-                }
-                if (isGradient()) {
-                    view.setAlpha(viewAlpha);
-                }
-
-            } else {
-                view.setVisibility(INVISIBLE);
-            }
-        }
-    }
-
     public interface OnSelectItemListener {
         void onSelectChanged(int position);
     }
-
     //--------------------------------------------------------
     //---------------------对外的接口----------------------------
+
     public void setOnSelectListener(OnSelectItemListener listener) {
         this.mSelectListener = listener;
     }
@@ -415,6 +395,7 @@ public class RecycleWheelView extends RecyclerView {
      * 默认为false
      *
      * @param isCurve 是否为curve效果
+     * @deprecated 目前还有bug，暂时不要用
      */
     public void setCurve(boolean isCurve) {
         this.isCurve = isCurve;
@@ -470,7 +451,7 @@ public class RecycleWheelView extends RecyclerView {
      * @param size 单位为DP
      */
     public void setLabelTextSize(int size) {
-        labelTextPaint.setTextSize(dp2px(getContext(), size));
+        labelTextPaint.setTextSize(ViewUtils.dp2px(getContext(), size));
     }
 
     /**
@@ -481,6 +462,5 @@ public class RecycleWheelView extends RecyclerView {
     public void setLableTextColor(@ColorInt int color) {
         labelTextPaint.setColor(color);
     }
-
 
 }

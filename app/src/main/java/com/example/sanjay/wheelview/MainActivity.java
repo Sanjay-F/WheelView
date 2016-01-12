@@ -2,9 +2,10 @@ package com.example.sanjay.wheelview;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.example.sanjay.wheelviewlib.RecycleWheelView;
-import com.example.sanjay.wheelviewlib.TextWheelAdapter;
+import com.example.sanjay.wheelviewlib.WheelAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private RecycleWheelView dateWheel;
-    private TextWheelAdapter<String> mAdapter;
+    private WheelAdapter<String> mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,15 +25,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSelectChanged(int position) {
                 mAdapter.setSelectedIndex(position);
+                Toast.makeText(MainActivity.this, "index=" + position, Toast.LENGTH_SHORT).show();
             }
         });
 
         dateWheel.setLableTextColor(getResources().getColor(R.color.colorAccent));
         dateWheel.setLineColor(getResources().getColor(R.color.colorAccent));
         dateWheel.setVisibleItem(5);
-        dateWheel.setCurve(true);
         dateWheel.setLable("cm");
-        mAdapter = new TextWheelAdapter<>(this);
+        mAdapter = new WheelAdapter<>(this);
         List<String> dataList = new ArrayList<>();
         for (int i = 60; i < 240; i++) {
             dataList.add(String.format("%d", i));
