@@ -2,7 +2,6 @@ package com.example.sanjay.wheelview;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
 
 import com.example.sanjay.wheelviewlib.RecycleWheelView;
 import com.example.sanjay.wheelviewlib.TextWheelAdapter;
@@ -25,12 +24,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSelectChanged(int position) {
                 mAdapter.setSelectedIndex(position);
-                Toast.makeText(MainActivity.this, String.format("index : %d", position), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MainActivity.this, String.format("index : %d", position), Toast.LENGTH_SHORT).show();
             }
         });
-
-
         dateWheel.setLableTextColor(getResources().getColor(R.color.colorAccent));
+        dateWheel.setLineColor(getResources().getColor(R.color.colorAccent));
         dateWheel.setVisibleItem(5);
         dateWheel.setCurve(true);
         dateWheel.setLable("cm");
