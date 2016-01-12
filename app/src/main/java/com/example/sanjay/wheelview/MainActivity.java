@@ -28,12 +28,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        dateWheel.setVisibleItem(13);
+
+        dateWheel.setLableTextColor(getResources().getColor(R.color.colorAccent));
+        dateWheel.setVisibleItem(5);
         dateWheel.setCurve(true);
-        dateWheel.setLable("年");
+        dateWheel.setLable("cm");
         mAdapter = new TextWheelAdapter<>(this);
         List<String> dataList = new ArrayList<>();
-        for (int i = 1900; i < 2016; i++) {
+        for (int i = 60; i < 240; i++) {
             dataList.add(String.format("%d", i));
         }
         mAdapter.setData(dataList);

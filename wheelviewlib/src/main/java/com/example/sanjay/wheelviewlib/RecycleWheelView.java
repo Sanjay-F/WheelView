@@ -26,8 +26,10 @@ public class RecycleWheelView extends RecyclerView {
 
     //设置一开始的padding
     private int mOldPaddingLeft, mOldPaddingTop, mOldPaddingRight, mOldPaddingBottom;
+
     //分割线粗细
     private int mLineThickness = 0;
+
     //分割线颜色
     private int mLineColor = 0;
     //中间提示颜色线
@@ -42,7 +44,6 @@ public class RecycleWheelView extends RecyclerView {
     private View mCurView;
     //方向 0 垂直 1 水平
     private int mDirection = 0;
-    //滚动监听器
     private OnSelectItemListener mSelectListener;
     //上一次选中的位置
     private int mLastSelectPosition = -1;
@@ -51,9 +52,7 @@ public class RecycleWheelView extends RecyclerView {
     private boolean gradient = true;
     private int visibleItemSize = 5;
     private String lable = "label";
-
     private Paint labelTextPaint;
-
     private static final int MINI_VISIBLE_ITEM = 3;
     private static final int MAX_VISIBLE_ITEM = 11;
 
@@ -195,7 +194,13 @@ public class RecycleWheelView extends RecyclerView {
                 height = getChildAt(0).getWidth();
             }
             int startLeft = getWidth() * 5 / 8;
-            int paddingV = getPaddingTop();
+
+            int paddingV = (getHeight() - height) >> 1;
+
+//            int paddingV = (getPaddingTop()+getPaddingBottom())/2;
+
+            Log.e(TAG, " padTop=" + getPaddingTop() + " childHeight=" + height + " height=" + getHeight() + " padV" + paddingV);
+
             int centerY = (int) (paddingV + height / 2 + labelTextPaint.getTextSize() / 2);
 //            Log.e(TAG, " view Width " + width + " parentWidth=" + getWidth() + "padV=" + paddingV);
             canvas.drawText(lable, startLeft, centerY, labelTextPaint);
@@ -285,9 +290,7 @@ public class RecycleWheelView extends RecyclerView {
         int centerIndex = indexOfChild(mCurView);
         int limitViewIndex = visibleItemSize / 2;
 
-
         for (int i = getChildCount() - 1; i >= 0; --i) {
-
             View view = getChildAt(i);
             //在view的重用过程，需要对旧的view做复原工作
             view.setAlpha(1.0f);
@@ -434,7 +437,7 @@ public class RecycleWheelView extends RecyclerView {
 
     /**
      * 设置显示的数据项数，最少3个 {@link RecycleWheelView#MINI_VISIBLE_ITEM} ，最多显示11个 {@link RecycleWheelView#MAX_VISIBLE_ITEM}
-     * <p/>
+     * 默认为5
      * 但如果显示的空间不够大，不会调整childView的大小
      *
      * @param visibleItemSize 显示的可见项目数
@@ -457,6 +460,24 @@ public class RecycleWheelView extends RecyclerView {
      */
     public void setLable(String lable) {
         this.lable = lable;
+    }
+
+    /**
+     * 设置标签字的大小
+     *
+     * @param size 单位为DP
+     */
+    public void setLabelTextSize(int size) {
+        labelTextPaint.setTextSize(dp2px(getContext(), size));
+    }
+
+    /**
+     * 设置标签的颜色
+     *
+     * @param color 形式：0xFF000000,不要扔一个ID->R.color.black
+     */
+    public void setLableTextColor(int color) {
+        labelTextPaint.setColor(color);
     }
 
 
