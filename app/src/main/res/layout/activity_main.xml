@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,10 +10,22 @@
     <com.example.sanjay.wheelviewlib.RecycleWheelView
         android:id="@+id/dateWheelView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="100dp"
         android:layout_centerInParent="true"
         android:background="#FFFFFF"
         app:recycleWheelLineColor="#000000"
-        app:recycleWheelLineThickness="1dp"
-        />
-</RelativeLayout>
+        app:recycleWheelLineThickness="1dp" />
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onYearClick"
+        android:text="年月日" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onDateClick"
+        android:text="单项数据" />
+</LinearLayout>
