@@ -30,7 +30,7 @@
 
 
 
-![demo2](art/demo2.png)
+![demo2](art/demo2.jpg)
 
 ## DatePicker---demo2
 
