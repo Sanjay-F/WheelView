@@ -44,4 +44,10 @@
 1. 目前还不能自适应大小
    就是当设置只显示3个时候，不能动态调节ChildView的大小
 2. 在设置为curve的时候，显示有些小问题,暂时不建议使用  
+3. 
+
+#  推荐
+目前这个还在迭代，还有不少问题，今天看到一个更功能齐全的
+
+[AndroidPicker](https://github.com/gzu-liyujiang/AndroidPicker)
  
