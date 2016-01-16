@@ -1,10 +1,13 @@
 package com.example.sanjay.wheelviewlib.picker;
 
 import android.app.Activity;
+import android.nfc.Tag;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -23,6 +26,8 @@ import java.util.Comparator;
  * @version 2015 /12/14
  */
 public class DatePicker extends WheelPicker {
+    private static final int CANCEL_BTN_TAG = 1;
+    private static final int SUBMIT_BTN_TAG = 0;
     private ArrayList<String> years = new ArrayList<String>();
     private ArrayList<String> months = new ArrayList<String>();
     private ArrayList<String> days = new ArrayList<String>();
@@ -174,7 +179,7 @@ public class DatePicker extends WheelPicker {
         layout.setOrientation(LinearLayout.HORIZONTAL);
         layout.setGravity(Gravity.CENTER);
         WheelView yearView = new WheelView(activity);
-        LinearLayout.LayoutParams wheelViewParams = new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT,1.0f);
+        LinearLayout.LayoutParams wheelViewParams = new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT, 1.0f);
 //        wheelViewParams.weight=1.0f;
 //        yearView.setLayoutParams(new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT));
         yearView.setLayoutParams(wheelViewParams);
@@ -307,9 +312,15 @@ public class DatePicker extends WheelPicker {
 
 
         View optView = activity.getLayoutInflater().inflate(R.layout.listitem_selected, null);
-        optView.findViewById(R.id.ls_cancel_btn).setOnClickListener(this);
-        optView.findViewById(R.id.ls_ok_btn).setOnClickListener(this);
-//        layout.addView(optView);
+        Button cancel = (Button) optView.findViewById(R.id.ls_cancel_btn);
+        cancel.setTag(CANCEL_BTN_TAG);
+        cancel.setOnClickListener(listener);
+
+
+        Button okBtn = (Button) optView.findViewById(R.id.ls_ok_btn);
+        okBtn.setTag(SUBMIT_BTN_TAG);
+        okBtn.setOnClickListener(listener);
+
         container.addView(layout);
         container.addView(optView);
 
@@ -409,8 +420,22 @@ public class DatePicker extends WheelPicker {
         public void onClick(View v) {
 
 
+            int tag = (int) v.getTag();
             if (onDataClickListener != null) {
+                switch (tag) {
+                    case SUBMIT_BTN_TAG:
+                        int year = Integer.valueOf(years.get(selectedYearIndex));
+                        int month = Integer.valueOf(months.get(selectedMonthIndex));
+                        int day = Integer.valueOf(days.get(selectedDayIndex));
+                        onDataClickListener.onOKClick(year, month, day);
+                        dismiss();
+                        break;
 
+                    case CANCEL_BTN_TAG:
+                        onDataClickListener.onCancelClick();
+                        dismiss();
+                        break;
+                }
 
             }
         }
@@ -424,7 +449,7 @@ public class DatePicker extends WheelPicker {
 
     }
 
-    public void setClickListener(onDataClickListener onDataClickListener) {
+    public void setOnDataClickListener(onDataClickListener onDataClickListener) {
 
         this.onDataClickListener = onDataClickListener;
     }

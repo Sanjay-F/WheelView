@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         dateWheel.setLabelTextColor(getResources().getColor(R.color.colorAccent));
         dateWheel.setLineColor(getResources().getColor(R.color.colorAccent));
         dateWheel.setVisibleItem(5);
@@ -84,6 +85,17 @@ public class MainActivity extends AppCompatActivity {
         DatePicker picker = new DatePicker(this);
         picker.setRange(2000, 2016);
         picker.setTitle("生日");
+        picker.setOnDataClickListener(new DatePicker.onDataClickListener() {
+            @Override
+            public void onOKClick(int year, int month, int day) {
+                Log.e("this", year + "-" + month + "-" + day);
+            }
+
+            @Override
+            public void onCancelClick() {
+                Log.e("this", "cancel");
+            }
+        });
         picker.setSelectedItem(2015, 10, 10);
         picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
             @Override

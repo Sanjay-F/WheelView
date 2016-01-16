@@ -7,7 +7,7 @@
 
 
     <Button
-        android:id="@+id/ls_ok_btn"
+        android:id="@+id/ls_cancel_btn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/marLeft_item_icon"
@@ -17,7 +17,7 @@
         android:textColor="@color/text_normal_color" />
 
     <Button
-        android:id="@+id/ls_cancel_btn"
+        android:id="@+id/ls_ok_btn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/marLeft_item_icon"
