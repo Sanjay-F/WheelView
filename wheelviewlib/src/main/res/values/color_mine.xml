@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="divide_background">#d9d9d9</color>
+
+    <color name="main_blue">#19ccf9</color>
+
+    <color name="main_blue_click">#16bfef</color>
+
+    <color name="main_blue_touch">#16bfef</color>
+
+    <color name="main_blue_alpha">#85d9f1</color>
+
+    <color name="main_blue_deep">#2F90BD</color>
+
+    <color name="text_blue_click">#d9d9d9</color>
+
+    <color name="hint_text_gray_light">#bcbcbc</color>
+
+    <!--给的四种颜色-->
+    <color name="text_important_color">#414141</color>
+
+    <color name="text_normal_color">#797979</color>
+
+    <color name="text_weak_color">#b6b6b6</color>
+
+    <color name="text_divide_color">#d9d9d9</color>
+    <color name="white">#FFFFFF</color>
+    <color name="normal_gray_border">#d9d9d9</color>
+    <color name="unClick_gray_border">#E8E8E8</color>
+</resources>

@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.sanjay.wheelviewlib.R;
 import com.example.sanjay.wheelviewlib.picker.util.DateUtils;
 
 import java.util.ArrayList;
@@ -28,6 +30,7 @@ public class DatePicker extends WheelPicker {
     private String yearLabel = "年", monthLabel = "月", dayLabel = "日";
     private int selectedYearIndex = 0, selectedMonthIndex = 0, selectedDayIndex = 0;
     private Mode mode = Mode.YEAR_MONTH_DAY;
+    private DatePicker.onDataClickListener onDataClickListener;
 
     /**
      * The enum Mode.
@@ -162,11 +165,20 @@ public class DatePicker extends WheelPicker {
 
     @Override
     protected View initContentView() {
+
+        LinearLayout container = new LinearLayout(activity);
+        container.setOrientation(LinearLayout.VERTICAL);
+        container.setGravity(Gravity.CENTER);
+
         LinearLayout layout = new LinearLayout(activity);
         layout.setOrientation(LinearLayout.HORIZONTAL);
         layout.setGravity(Gravity.CENTER);
         WheelView yearView = new WheelView(activity);
-        yearView.setLayoutParams(new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT));
+        LinearLayout.LayoutParams wheelViewParams = new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT,1.0f);
+//        wheelViewParams.weight=1.0f;
+//        yearView.setLayoutParams(new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT));
+        yearView.setLayoutParams(wheelViewParams);
+
         yearView.setTextSize(textSize);
         yearView.setTextColor(textColorNormal, textColorFocus);
         yearView.setLineVisible(lineVisible);
@@ -182,7 +194,8 @@ public class DatePicker extends WheelPicker {
         }
         layout.addView(yearTextView);
         WheelView monthView = new WheelView(activity);
-        monthView.setLayoutParams(new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT));
+//        monthView.setLayoutParams(new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT));
+        monthView.setLayoutParams(wheelViewParams);
         monthView.setTextSize(textSize);
         monthView.setTextColor(textColorNormal, textColorFocus);
         monthView.setLineVisible(lineVisible);
@@ -198,7 +211,8 @@ public class DatePicker extends WheelPicker {
         }
         layout.addView(monthTextView);
         final WheelView dayView = new WheelView(activity);
-        dayView.setLayoutParams(new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT));
+//        dayView.setLayoutParams(new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT));
+        dayView.setLayoutParams(wheelViewParams);
         dayView.setTextSize(textSize);
         dayView.setTextColor(textColorNormal, textColorFocus);
         dayView.setLineVisible(lineVisible);
@@ -290,7 +304,16 @@ public class DatePicker extends WheelPicker {
                 }
             });
         }
-        return layout;
+
+
+        View optView = activity.getLayoutInflater().inflate(R.layout.listitem_selected, null);
+        optView.findViewById(R.id.ls_cancel_btn).setOnClickListener(this);
+        optView.findViewById(R.id.ls_ok_btn).setOnClickListener(this);
+//        layout.addView(optView);
+        container.addView(layout);
+        container.addView(optView);
+
+        return container;
     }
 
     private int stringToYearMonthDay(String text) {
@@ -380,4 +403,29 @@ public class DatePicker extends WheelPicker {
 
     }
 
+
+    public View.OnClickListener listener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+
+            if (onDataClickListener != null) {
+
+
+            }
+        }
+    };
+
+    public interface onDataClickListener {
+
+        public void onOKClick(int year, int month, int day);
+
+        public void onCancelClick();
+
+    }
+
+    public void setClickListener(onDataClickListener onDataClickListener) {
+
+        this.onDataClickListener = onDataClickListener;
+    }
 }

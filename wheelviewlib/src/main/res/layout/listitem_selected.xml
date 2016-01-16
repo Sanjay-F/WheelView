@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/text_divide_color"
+    android:orientation="horizontal">
+
+
+    <Button
+        android:id="@+id/ls_ok_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/marLeft_item_icon"
+        android:layout_weight="1"
+        android:background="@drawable/selector_btn_circle"
+        android:text="取消"
+        android:textColor="@color/text_normal_color" />
+
+    <Button
+        android:id="@+id/ls_cancel_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/marLeft_item_icon"
+        android:layout_weight="1"
+        android:background="@drawable/selector_btn_circle"
+        android:text="确认"
+        android:textColor="@color/text_normal_color" />
+
+
+</LinearLayout>

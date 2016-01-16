@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <string name="collect_points">积分</string>
+    <string name="collect_points_format">%d 分</string>
+    <string name="mine_device">我的设备</string>
+    <string name="phone_register">手机号注册 >> </string>
+    <string name="login_wechat">微信登陆</string>
+    <string name="hint_phone_input">请输入号码</string>
+    <string name="send_verify_code">发送验证码</string>
+    <string name="hint_input_key">输入你的密码</string>
+    <string name="hint_input_Verifycode">输入验证码</string>
+    <string name="signUp_resend">重发</string>
+    <string name="hint_invalid_phone">无效号码</string>
+    <string name="invalid_phone_format">手机号格式不正确</string>
+    <string name="register_height">身高</string>
+    <string name="register_year">生日</string>
+    <string name="register_weight">体重</string>
+    <string name="next_step">下一步</string>
+    <string name="register_nickname">昵称</string>
+    <string name="hint_nickname">乐心1002</string>
+    <string name="recommend_step_format">根据你的情况，建议每天运动%d步</string>
+    <string name="register_km">公里</string>
+    <string name="register_kg">Kg</string>
+    <string name="register_cal">大卡</string>
+    <string name="register_mim">分钟</string>
+    <string name="register_step">步</string>
+    <string name="hint_verify_code">我们将发送验证码到你填写的手机，且验证码在三分钟内有效</string>
+
+    <string name="recommend_weight_format">建议体重维持%dkg</string>
+    <string name="register_finish">完成</string>
+    <string name="get_verify_code">获取验证码</string>
+    <string name="register_target_intro">目标都是为你量身打造哦</string>
+</resources>

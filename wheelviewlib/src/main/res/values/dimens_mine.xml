@@ -1,0 +1,42 @@
+<resources>
+
+
+    <!-- google recommend  style -->
+    <dimen name="text_display1">34sp</dimen>
+    <dimen name="text_Headline">24sp</dimen>
+    <dimen name="text_Title">20sp</dimen>
+    <dimen name="text_Subhead">20sp</dimen>
+    <dimen name="text_Body2">15sp</dimen>
+    <dimen name="text_caption">12sp</dimen>
+    <dimen name="text_Menu">14sp</dimen>
+    <dimen name="text_Button">14sp</dimen>
+    <!-- google recommend  style -->
+    <dimen name="marLeft_listitem">16dp</dimen>
+    <dimen name="margin_listitem">16dp</dimen>
+    <dimen name="marLeft2_listitem">32dp</dimen>
+    <dimen name="marRight_listitem">16dp</dimen>
+    <dimen name="marRight2_listitem">32dp</dimen>
+    <dimen name="marTop_listitem">16dp</dimen>
+    <dimen name="marBottom_listitem">16dp</dimen>
+    <!-- google recommend  style -->
+    <dimen name="marLeft_item_icon">9dp</dimen>
+    <dimen name="marRight_item_icon">9dp</dimen>
+    <dimen name="marTop_item_icon">9dp</dimen>
+    <dimen name="margin_list_icon">9dp</dimen>
+    <dimen name="marBottom_item_icon">9dp</dimen>
+    <dimen name="mar_gap">4dp</dimen>
+    <dimen name="mar_gap_1">8dp</dimen>
+
+
+    <!-- our style -->
+    <dimen name="marTop_listview">15dp</dimen>
+    <dimen name="padTop_item_icon">9dp</dimen>
+    <dimen name="padding_list_item">16dp</dimen>
+    <dimen name="padTop_small">4dp</dimen>
+    <dimen name="iv_avatar_medium_width">72dp</dimen>
+    <dimen name="iv_avatar_medium_height">72dp</dimen>
+    <dimen name="iv_avatar_big_width">64dp</dimen>
+    <dimen name="iv_avatar_big_height">64dp</dimen>
+
+
+</resources>

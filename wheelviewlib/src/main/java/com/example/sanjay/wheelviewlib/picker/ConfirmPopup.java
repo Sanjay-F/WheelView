@@ -4,13 +4,16 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.support.annotation.ColorInt;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.example.sanjay.wheelviewlib.R;
 import com.example.sanjay.wheelviewlib.picker.util.ConvertUtils;
 
 
@@ -33,6 +36,7 @@ public abstract class ConfirmPopup<V extends View> extends BottomPopup<View> imp
     private int submitTextColor = Color.BLACK;
     private OnConfirmListener onConfirmListener;
     private boolean optLineVisible;
+    private String title;
 
     /**
      * Instantiates a new Confirm popup.
@@ -83,6 +87,11 @@ public abstract class ConfirmPopup<V extends View> extends BottomPopup<View> imp
         this.cancelVisible = cancelVisible;
     }
 
+    public void setTitle(String title) {
+
+        this.title = title;
+    }
+
     /**
      * Sets cancel text.
      *
@@ -119,10 +128,12 @@ public abstract class ConfirmPopup<V extends View> extends BottomPopup<View> imp
         this.submitTextColor = submitTextColor;
     }
 
+
     public void setOptLineVisible(boolean optLineVisible) {
 
         this.optLineVisible = optLineVisible;
     }
+
 
     @Override
     protected View getView() {
@@ -166,6 +177,17 @@ public abstract class ConfirmPopup<V extends View> extends BottomPopup<View> imp
         submitButton.setTextColor(submitTextColor);
         submitButton.setOnClickListener(this);
         topButtonLayout.addView(submitButton);
+
+
+        TextView tvTitle = new TextView(activity);
+        tvTitle.setTextSize(17);
+        tvTitle.setTextColor(activity.getResources().getColor(R.color.text_normal_color));
+        tvTitle.setBackgroundColor(activity.getResources().getColor(R.color.text_divide_color));
+        tvTitle.setText(title);
+        LinearLayout.LayoutParams titleLayoutParams = new LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT);
+        tvTitle.setLayoutParams(titleLayoutParams);
+        rootLayout.addView(tvTitle);
+        tvTitle.setPadding(20,10,10,10);
 
         if (optLineVisible) {
             rootLayout.addView(topButtonLayout);

@@ -60,8 +60,10 @@ public class MainActivity extends AppCompatActivity {
         picker.setTextColor(R.color.mainBlue);
         picker.setLineColor(R.color.mainBlue);
         picker.setTopLineColor(0XFFFFFF);
+
         picker.setOptLineVisible(true);
         picker.setCancelVisible(false);
+
 
 
         picker.setOffset(2);
@@ -81,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
     public void onYearClick(View view) {
         DatePicker picker = new DatePicker(this);
         picker.setRange(2000, 2016);
+        picker.setTitle("生日");
         picker.setSelectedItem(2015, 10, 10);
         picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
             @Override

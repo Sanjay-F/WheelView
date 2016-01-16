@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/shape_rect_with_arc_gray_solid" android:state_pressed="true"/>
+    <item android:drawable="@drawable/shape_rect_with_arc_white_solid"/>
+</selector>
